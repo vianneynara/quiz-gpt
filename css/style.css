@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+.sidebar {
+    width: 20%;
+    background-color: #d3d3d3;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.sidebar button {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #b0b0b0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.main-content {
+    width: 80%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.header div {
+    background-color: #a0a0a0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+.chat-box {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow-y: auto;
+}
+.message {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    max-width: 60%;
+}
+.message.left {
+    background-color: #a0a0a0;
+    align-self: flex-start;
+}
+.message.right {
+    background-color: #d3d3d3;
+    align-self: flex-end;
+}
+.input-box {
+    display: flex;
+    align-items: center;
+    background-color: #d3d3d3;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.input-box input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.input-box button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #b0b0b0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.dropdown {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #b0b0b0;
+    font-size: 16px;
+    width: 100%;
+}
