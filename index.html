@@ -1,10 +1,37 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>QuizGPT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Bot</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <div class="sidebar">
+            <button onclick="newChat()">+ new chat</button>
+            <div id="history"></div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <select id="topic" class="dropdown">
+                    <option value="Basic Math">Basic Math</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                </select>
+                <select id="difficulty" class="dropdown">
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+            <div class="chat-box" id="chat-box"></div>
+            <div class="input-box">
+                <input type="text" id="prompt" placeholder="Type your prompt here..." onkeydown="if(event.key === 'Enter') submitPrompt()">
+                <button onclick="submitPrompt()">Submit</button>
+            </div>
+        </div>
+    </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
