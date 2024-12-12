@@ -29,7 +29,7 @@
       <div class="flex flex-col">
         <div class="font-bold text-lg mb-2">{options[0]}</div>
         {#each options.slice(1) as option, index}
-          <button class="flex items-center bg-blue-500 mb-2 px-2 py-1 rounded-md" on:click={() => onOptionClick(cleanOption(option))}>
+          <button class="flex items-center bg-blue-500 hover:bg-blue-600 mb-2 px-2 py-1 rounded-md" on:click={() => onOptionClick(cleanOption(option))}>
             <span class="font-bold mr-2">{indexToLetter(index)}.</span>
             <span class="text-white">{cleanOption(option)}</span>
           </button>
@@ -61,6 +61,9 @@
   }
   .bg-blue-500 {
     background-color: #3b82f6;
+  }
+  .hover\:bg-blue-600:hover {
+    background-color: #2563eb;
   }
   .text-white {
     color: white;
