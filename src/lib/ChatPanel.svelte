@@ -59,6 +59,7 @@
         });
 
         const assistantReply: string = response.data.choices[0].message.content;
+        console.log('Assistant reply:', assistantReply);
         const assistantMessage: ChatMessage = {
           text: assistantReply,
           role: 'assistant',
