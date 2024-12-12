@@ -1,6 +1,6 @@
 # Quiz GPT using OpenAI with Svelte
 
-Simple college project to demonstrate the use of OpenAI's API with Svelte.
+Simple practice project to demonstrate the use of OpenAI's API with Svelte.
 Built with a form of a quiz chat that relies on AI to create questions and answers for a defined topic.
 Can be used for educational purposes or just for fun.
 
