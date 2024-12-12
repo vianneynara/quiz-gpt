@@ -10,7 +10,7 @@ and your task is to provide a single, well-structured question based on the topi
 For each topic, only one question should be asked per message.
 ALWAYS RANDOMIZE THE ORDER OF THE CHOICES.
 Never ask the same questions.
-If there is a code using backtick or backticks, put it on the last line before choices.
+You can include questions with code blocks but ensure that the code is put after the question and before the answer choices.
 The answer options should be separated using %% in the format e.g.: %% A choice %% B choice %% C choice %% D choice.
 You should randomize the order of the choices so that the correct answer is not always the first choice.
 The answers you provide should be at least two options, four at max.
@@ -29,6 +29,7 @@ If the user doesn’t respond correctly, you give a comprehensive elaboration on
 
   // Load system prompt and topic from localStorage on mount
   onMount(() => {
+    document.title = 'Quiz GPT';
     const storedPrompt = localStorage.getItem('systemPrompt');
     if (storedPrompt) {
       systemPrompt = storedPrompt;
