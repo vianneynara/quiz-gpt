@@ -1,23 +1,22 @@
 <script>
   export let message = "default";
   export let role = "user";
-  export let key = 0;
 
   // Split the message by '%%' to separate options only if the role is assistant
   let options = role === 'assistant' ? message.split("%%").map(option => option.trim()) : [];
 
-  // Function to convert index to letter (A, B, C, D) but limit to 4 choices
+  // Convert index to letter (A, B, C, D), limit to 4 choices
   const indexToLetter = (index) => {
     const letters = ['A', 'B', 'C', 'D'];
     return letters[index] || ''; // Return empty for indices greater than 3
   };
 
-  // Function to remove leading letter and period from options
-  const cleanOption = (option) => option.replace(/^[A-D]\.\s*/, '');
+  // Remove leading letter and period (and parentheses) from options
+  const cleanOption = (option) => option.replace(/^[A-D][.)]\s*/, '');
 </script>
 
 <div class="flex mb-2 justify-between">
-  <div class="max-w-sm px-4 py-2 rounded-xl"
+  <div class="max-w-lg px-4 py-2 rounded-xl"
        class:ml-auto={role === 'user'}
        class:mr-auto={role !== 'user'}
        class:bg-blue-500={role === 'user'}
@@ -65,10 +64,27 @@
   :global(.mr-auto) {
     margin-right: auto;
   }
-  .text-blue-500 {
-    color: #3b82f6; /* Tailwind's blue */
+  .bg-blue-500 {
+    background-color: #3b82f6;
   }
-  .text-green-500 {
-    color: #10b981; /* Tailwind's green */
+  .text-white {
+    color: white;
+  }
+  .font-bold {
+    font-weight: bold;
+  }
+  .rounded-md {
+    border-radius: 0.375rem;
+  }
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  .px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
   }
 </style>
