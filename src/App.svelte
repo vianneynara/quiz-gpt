@@ -6,20 +6,21 @@
   import {onMount} from 'svelte';
 
   let systemPrompt = `You act as a teacher in a classroom chat setting,
-  and your task is to provide a single, well-structured question based on the topic provided for each message.
-  For each topic, only one question should be asked per message,
-  Never ask the same questions.
-  and the answer options should be separated using %% in the format e.g.: %% A choice %% B choice %% C choice %% D choice
-  You should randomize the order of the choices.
-  The answers you provide should at least be two options, four at max.
-  For example, a true or false questions or multiple-choice questions.
-  After presenting the question, wait for the user to respond.
-  If the user answers correctly, acknowledge their response.
-  If the user fails to answer or answers incorrectly,
-  provide a detailed explanation of the correct answer and offer additional resources or context where necessary.
-  Ensure that: Only one question is asked per message. The answers are clear and well-defined.
-  If the user doesn’t respond correctly, you give a comprehensive elaboration on the correct answer.
-`;
+and your task is to provide a single, well-structured question based on the topic provided for each message.
+For each topic, only one question should be asked per message.
+ALWAYS RANDOMIZE THE ORDER OF THE CHOICES.
+Never ask the same questions.
+If there is a code using backtick or backticks, put it on the last line before choices.
+The answer options should be separated using %% in the format e.g.: %% A choice %% B choice %% C choice %% D choice.
+You should randomize the order of the choices so that the correct answer is not always the first choice.
+The answers you provide should be at least two options, four at max.
+For example, true or false questions or multiple-choice questions.
+After presenting the question, wait for the user to respond.
+If the user answers correctly, acknowledge their response.
+If the user fails to answer or answers incorrectly,
+provide a detailed explanation of the correct answer and offer additional resources or context where necessary.
+Ensure that: Only one question is asked per message. The answers are clear and well-defined.
+If the user doesn’t respond correctly, you give a comprehensive elaboration on the correct answer.`;
 
   let showAuthorizeModal = false;
   let showTopicModal = false;
@@ -97,31 +98,31 @@
 </script>
 
 <main class="flex flex-col h-screen w-full">
-<header class="flex items-center justify-between p-4 bg-gray-600 text-white w-full">
-  <div class="flex-1 flex justify-start">
-    <button
-        on:click={toggleSystemPromptModal}
-        class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
-      Edit Prompt
-    </button>
-    <button on:click={resetChat} class="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
-      Reset Chat
-    </button>
-  </div>
-  <h1 class="text-xl font-semibold flex-1 text-center">Quiz GPT</h1>
-  <div class="flex-1 flex justify-end">
-    <button
-        on:click={toggleTopicModal}
-        class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
-      Set Topic
-    </button>
-    <button
-        on:click={toggleAuthorizeModal}
-        class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-      Authorize
-    </button>
-  </div>
-</header>
+  <header class="flex items-center justify-between p-4 bg-gray-600 text-white w-full">
+    <div class="flex-1 flex justify-start">
+      <button
+          on:click={toggleSystemPromptModal}
+          class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
+        Edit Prompt
+      </button>
+      <button on:click={resetChat} class="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+        Reset Chat
+      </button>
+    </div>
+    <h1 class="text-xl font-semibold flex-1 text-center">Quiz GPT</h1>
+    <div class="flex-1 flex justify-end">
+      <button
+          on:click={toggleTopicModal}
+          class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
+        Set Topic
+      </button>
+      <button
+          on:click={toggleAuthorizeModal}
+          class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+        Authorize
+      </button>
+    </div>
+  </header>
 
   <!-- Chat Panel Section -->
   <div class="flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
