@@ -19,14 +19,20 @@
       if (code) codeBlocks.push(code.trim());
     }
 
-    // Remove code blocks from the message for further parsing
-    const cleanedMessage = message.replace(codeBlockRegex, '').trim();
+    // Remove code blocks but preserve line breaks
+    const cleanedMessage = message.replace(codeBlockRegex, match => '\n'.repeat(match.split('\n').length - 1)).trim();
 
-    // Split message into question and options
-    const parts = cleanedMessage.split("%%");
-    question = parts[0].trim(); // The first part is the question
+// Split message into question and options
+    const parts = cleanedMessage.split("%%").map(part => part.trim());
+    question = parts[0]; // The first part is the question
+
+// Retain any additional line breaks in the question
+    question = question.replace(/\n/g, '<br>'); // Optional: replace newline with HTML <br> for rendering
+
+// Parse options as before
     options = parts.slice(1).map(option => option.trim())
-      .filter(option => option !== "" && option !== "."); // Remaining parts are the options
+      .filter(option => option !== "" && option !== ".");
+
   }
 
   const indexToLetter = (index: number) => {
@@ -58,8 +64,9 @@
       <div class="assistant-reply">
         <!-- Render the question -->
         <p class="question text-md text-gray-800" class:font-semibold={options.length > 0}>
-          {question}
+          {@html question}
         </p>
+
 
         <!-- Render code blocks if available -->
         {#if codeBlocks.length > 0}
