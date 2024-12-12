@@ -36,7 +36,7 @@
             role: 'user',
             content: `The topic of this conversation is:
             ${localStorage.getItem('topic')}
-            ${newMessage + ". If this might be an answer, double check whether it is correct."}`
+            ${newMessage}`
           }
         ];
         console.log("Latest message sent: ", conversationHistory[conversationHistory.length - 1]);

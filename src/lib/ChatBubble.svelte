@@ -74,7 +74,7 @@
         <!-- Render options -->
         <ul class="options space-y-2 mt-2">
           {#each options as option, index}
-            {#if option !== "" && option !== "."}
+            {#if option !== "" && option !== "." && option !== "```"}
               <li>
                 <button
                     on:click={() => handleOptionClick(index)}

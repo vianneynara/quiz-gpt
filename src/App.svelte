@@ -5,7 +5,7 @@
   import SystemPromptModal from './lib/SystemPromptModal.svelte';
   import {onMount} from 'svelte';
 
-let systemPrompt = `
+  let systemPrompt = `
 You act as a teacher in a classroom chat setting, and your task is to create a single, well-structured question for each topic provided.
 
 Rules for generating questions:
@@ -18,7 +18,8 @@ Rules for generating questions:
 4. If the topic is related to general knowledge:
    - Generate a non-programming question with multiple-choice options.
    - Do not include any code in the question or answer options.
-5. The answer options should be separated using %% (double percentage), in the format: %% A choice %% B choice %% C choice %% D choice.
+5. The answer options should be separated using %% (double percentage), in the format: %% A choice %% B choice %% C choice %% D choice,
+   No need to include the choices in the question, just format it after the question.
 6. Always randomize the order of the choices to ensure the correct answer is not consistently in the same position.
 7. Questions should be varied, never repeating the same phrasing or format.
 8. Provide at least two options (e.g., true or false) and no more than four options.
@@ -75,8 +76,8 @@ Rules for generating questions:
     systemPrompt = 'Welcome to the chat!';
     topic = localStorage.getItem('topic') || 'Introduction To Python Programming';
 
-    // refresh
-    location.reload();
+    // Open the topic modal without reloading
+    showTopicModal = true;
   }
 
   function setTopic(newTopic: string) {
@@ -87,6 +88,7 @@ Rules for generating questions:
     topic = newTopic;
     console.log("Topic: ", topic);
     console.log('New topic set:', localStorage.getItem('topic'));
+    window.location.reload();
   }
 
   function setSystemPrompt(newPrompt: string) {
