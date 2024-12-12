@@ -1,17 +1,15 @@
 <script>
   export let message = "default";
   export let role = "user";
+  export let onOptionClick; // Function to handle option click
 
-  // Split the message by '%%' to separate options only if the role is assistant
   let options = role === 'assistant' ? message.split("%%").map(option => option.trim()) : [];
 
-  // Convert index to letter (A, B, C, D), limit to 4 choices
   const indexToLetter = (index) => {
     const letters = ['A', 'B', 'C', 'D'];
-    return letters[index] || ''; // Return empty for indices greater than 3
+    return letters[index] || '';
   };
 
-  // Remove leading letter and period (and parentheses) from options
   const cleanOption = (option) => option.replace(/^[A-D][.)]\s*/, '');
 </script>
 
@@ -29,15 +27,12 @@
 
     {#if role === 'assistant' && options.length > 1}
       <div class="flex flex-col">
-        <!-- Render the first element as the question -->
         <div class="font-bold text-lg mb-2">{options[0]}</div>
-
-        <!-- Render choices with letters (A, B, C, D) -->
         {#each options.slice(1) as option, index}
-          <div class="flex items-center bg-blue-500 mb-2 px-2 py-1 rounded-md">
+          <button class="flex items-center bg-blue-500 mb-2 px-2 py-1 rounded-md" on:click={() => onOptionClick(cleanOption(option))}>
             <span class="font-bold mr-2">{indexToLetter(index)}.</span>
             <span class="text-white">{cleanOption(option)}</span>
-          </div>
+          </button>
         {/each}
       </div>
     {:else}

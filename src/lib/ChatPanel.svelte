@@ -1,8 +1,8 @@
 <script lang="ts">
   import MessageInput from './MessageInput.svelte';
   import ChatBubble from './ChatBubble.svelte';
-  import {onMount} from 'svelte';
-  import type {ChatMessage} from "../App.svelte";
+  import { onMount } from 'svelte';
+  import type { ChatMessage } from '../App.svelte';
   import axios from 'axios';
 
   export let messages: ChatMessage[] = [];
@@ -18,7 +18,6 @@
     }
   });
 
-  // Function to send the user message to OpenAI
   async function sendToOpenAI() {
     const apiKey = localStorage.getItem('apiKey');
     if (!apiKey) {
@@ -68,11 +67,10 @@
 
         messages = [
           ...messages,
-          {text: newMessage, role: 'user', key: messages.length},
+          { text: newMessage, role: 'user', key: messages.length },
           assistantMessage
         ];
 
-        // Save messages to localStorage
         localStorage.setItem('chatMessages', JSON.stringify(messages));
         newMessage = '';
       } catch (error) {
@@ -86,7 +84,7 @@
     setTimeout(() => {
       const chatContainer = document.querySelector('.space-y-4');
       if (chatContainer) {
-        chatContainer.scrollIntoView({behavior: 'smooth', block: 'end'});
+        chatContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
     }, 1500);
   }
@@ -95,12 +93,17 @@
     newMessage = 'Start Quiz';
     handleSend();
   }
+
+  function handleOptionClick(option) {
+    newMessage = option;
+    handleSend();
+  }
 </script>
 
 <div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full pb-20">
   <h2 class="text-xl text-blue-700 font-semibold text-center">{topic}</h2>
-  {#each messages.slice(1) as {text, role}, index}
-    <ChatBubble message={text} role={role}/>
+  {#each messages.slice(1) as { text, role }, index}
+    <ChatBubble message={text} role={role} onOptionClick={handleOptionClick} />
   {/each}
   {#if messages.length === 1}
     <div class="flex justify-center">
@@ -111,7 +114,7 @@
   {/if}
 </div>
 
-<MessageInput bind:newMessage={newMessage} sendMessage={handleSend}/>
+<MessageInput bind:newMessage={newMessage} sendMessage={handleSend} />
 
 <style>
   :global(body) {
