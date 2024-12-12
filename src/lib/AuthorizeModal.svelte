@@ -14,6 +14,7 @@
   });
 
   function saveApiKey() {
+    localStorage.setItem('apiKey', apiKey);
     console.log('API Key saved:', localStorage.getItem('apiKey'));
     onClose();
   }

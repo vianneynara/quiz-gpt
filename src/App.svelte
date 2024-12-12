@@ -5,7 +5,13 @@
   import SystemPromptModal from './lib/SystemPromptModal.svelte';
   import {onMount} from 'svelte';
 
-  let systemPrompt = 'Welcome to the chat!';
+  let systemPrompt = `
+  Create a question about the topic provided.
+  From the topic, you should format your message to split each answers using %%.
+  After you send it, the next messages should be the answers from the user.
+  If user fails to answer it, then elaborate the right answer and sources.
+  `;
+
   let showAuthorizeModal = false;
   let showTopicModal = false;
   let showSystemPromptModal = false;
@@ -43,6 +49,9 @@
     localStorage.setItem('topic', 'Topic not set');
     systemPrompt = 'Welcome to the chat!';
     topic = localStorage.getItem('topic') || 'Topic not set';
+
+    // refresh
+    location.reload();
   }
 
   function setTopic(newTopic: string) {
@@ -55,6 +64,7 @@
 
   function setSystemPrompt(newPrompt: string) {
     systemPrompt = newPrompt;
+    localStorage.setItem('systemPrompt', newPrompt);
     console.log('New system prompt set:', localStorage.getItem('systemPrompt'));
   }
 </script>
