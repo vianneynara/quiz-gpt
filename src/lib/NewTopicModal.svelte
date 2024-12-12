@@ -23,7 +23,12 @@
       />
       <div class="flex justify-end">
         <button on:click={onClose} class="p-2 bg-gray-500 text-white rounded-md mr-2">Cancel</button>
-        <button on:click={handleSetTopic} class="p-2 bg-blue-500 text-white rounded-md">Set Topic</button>
+        <button
+            on:click={handleSetTopic}
+            class="p-2 bg-blue-500 text-white rounded-md"
+            on:keydown={(event) => event.key === 'Enter' && handleSetTopic()}>
+          Set Topic
+        </button>
       </div>
     </div>
   </div>

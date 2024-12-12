@@ -32,7 +32,11 @@
       />
       <div class="flex justify-end">
         <button on:click={onClose} class="p-2 bg-gray-500 text-white rounded-md mr-2">Cancel</button>
-        <button on:click={saveApiKey} class="p-2 bg-blue-500 text-white rounded-md">Set API Key</button>
+        <button
+            on:click={saveApiKey}
+            class="p-2 bg-blue-500 text-white rounded-md"
+            on:keydown={(event) => event.key === 'Enter' && saveApiKey()}>
+          Set API Key</button>
       </div>
     </div>
   </div>
