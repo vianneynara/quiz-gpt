@@ -19,20 +19,14 @@
       if (code) codeBlocks.push(code.trim());
     }
 
-    // Remove code blocks but preserve line breaks
     const cleanedMessage = message.replace(codeBlockRegex, match => '\n'.repeat(match.split('\n').length - 1)).trim();
 
-// Split message into question and options
     const parts = cleanedMessage.split("%%").map(part => part.trim());
     question = parts[0]; // The first part is the question
+    question = question.replace(/\n{2,}/g, '<br><br>').replace(/\n/g, '<br>');
 
-// Retain any additional line breaks in the question
-    question = question.replace(/\n/g, '<br>'); // Optional: replace newline with HTML <br> for rendering
-
-// Parse options as before
     options = parts.slice(1).map(option => option.trim())
       .filter(option => option !== "" && option !== ".");
-
   }
 
   const indexToLetter = (index: number) => {

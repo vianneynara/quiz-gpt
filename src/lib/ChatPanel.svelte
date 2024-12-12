@@ -36,7 +36,7 @@
             role: 'user',
             content: `The topic of this conversation is:
             ${localStorage.getItem('topic')}
-            ${newMessage}`
+            ${newMessage + ". And next question."}`
           }
         ];
         console.log("Latest message sent: ", conversationHistory[conversationHistory.length - 1]);
