@@ -1,47 +1,89 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import ChatPanel from './lib/ChatPanel.svelte';
+  import AuthorizeModal from './lib/AuthorizeModal.svelte';
+  import NewTopicModal from './lib/NewTopicModal.svelte';
+  import SystemPromptModal from './lib/SystemPromptModal.svelte';
+  import { onMount } from 'svelte';
+
+  let newMessage = '';
+  let systemPrompt = 'Welcome to the chat!';
+  let showAuthorizeModal = false;
+  let showTopicModal = false;
+  let showSystemPromptModal = false;
+  let topic = 'General Discussion';
+
+  // Load system prompt and topic from localStorage on mount
+  onMount(() => {
+    const storedPrompt = localStorage.getItem('systemPrompt');
+    if (storedPrompt) {
+      systemPrompt = storedPrompt;
+    }
+    const storedTopic = localStorage.getItem('topic');
+    if (storedTopic) {
+      topic = storedTopic;
+    }
+  });
+
+  // Save system prompt to localStorage whenever it changes
+  $: localStorage.setItem('systemPrompt', systemPrompt);
+
+  function toggleAuthorizeModal() {
+    showAuthorizeModal = !showAuthorizeModal;
+  }
+
+  function toggleTopicModal() {
+    showTopicModal = !showTopicModal;
+  }
+
+  function toggleSystemPromptModal() {
+    showSystemPromptModal = !showSystemPromptModal;
+  }
+
+  function resetChat() {
+    localStorage.removeItem('chatMessages');
+    localStorage.setItem('topic', 'General Discussion');
+    systemPrompt = 'Welcome to the chat!';
+    topic = 'General Discussion';
+  }
+
+  function setTopic(newTopic: string) {
+    localStorage.setItem('topic', newTopic);
+    topic = newTopic;
+    console.log('New topic set:', localStorage.getItem('topic'));
+  }
+
+  function setSystemPrompt(newPrompt: string) {
+    systemPrompt = newPrompt;
+    console.log('New system prompt set:', localStorage.getItem('systemPrompt'));
+  }
 </script>
 
-<main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+<main class="flex flex-col h-screen w-full">
+  <header class="flex items-center justify-between p-4 bg-gray-600 text-white w-full">
+    <button on:click={resetChat} class="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+      Reset Chat
+    </button>
+    <h1 class="text-xl font-semibold">Quiz GPT</h1>
+    <div>
+      <button on:click={toggleTopicModal} class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
+        Set Topic
+      </button>
+      <button on:click={toggleSystemPromptModal} class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
+        Edit System Prompt
+      </button>
+      <button on:click={toggleAuthorizeModal} class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+        Authorize
+      </button>
+    </div>
+  </header>
+
+  <!-- Chat Panel Section -->
+  <div class="flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
+    <ChatPanel {topic}/>
   </div>
-  <h1>Vite + Svelte</h1>
 
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <!-- Modal Section -->
+  <AuthorizeModal {showAuthorizeModal} onClose={toggleAuthorizeModal}/>
+  <NewTopicModal {showTopicModal} onClose={toggleTopicModal} setTopic={setTopic}/>
+  <SystemPromptModal {showSystemPromptModal} onClose={toggleSystemPromptModal} setSystemPrompt={setSystemPrompt}/>
 </main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
