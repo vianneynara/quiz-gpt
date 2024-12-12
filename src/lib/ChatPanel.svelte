@@ -2,14 +2,9 @@
   import MessageInput from './MessageInput.svelte';
   import ChatBubble from './ChatBubble.svelte';
   import { onMount } from 'svelte';
+  import type {ChatMessage} from "../App.svelte";
 
-  interface Message {
-    text: string;
-    role: 'system' | 'user' | 'assistant';
-    key: number;
-  }
-
-  export let messages: Message[] = [];
+  export let messages: ChatMessage[] = [];
   export let topic: string;
   let newMessage = '';
 
@@ -22,10 +17,11 @@
 
   function sendMessage() {
     if (newMessage.trim()) {
-      const newMsg: Message = { text: newMessage, role: 'user', key: messages.length };
+      const newMsg: ChatMessage = { text: newMessage, role: 'user', key: messages.length };
       messages = [...messages, newMsg];
       localStorage.setItem('chatMessages', JSON.stringify(messages));
       newMessage = '';
+      console.log(localStorage.getItem('chatMessages'));
     }
   }
 </script>

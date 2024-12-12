@@ -6,6 +6,7 @@
   import {onMount} from 'svelte';
 
   let systemPrompt = `
+  You act as a teacher in a classroom chat setting.
   Create a question about the topic provided.
   From the topic, you should format your message to split each answers using %%.
   After you send it, the next messages should be the answers from the user.
@@ -46,6 +47,14 @@
 
   function resetChat() {
     localStorage.removeItem('chatMessages');
+    // Create system message and save system message to localStorage
+    const systemMessage: ChatMessage = {
+      text: systemPrompt,
+      role: 'system',
+      key: 0
+    };
+    localStorage.setItem('chatMessages', JSON.stringify([systemMessage]));
+
     localStorage.setItem('topic', 'Topic not set');
     systemPrompt = 'Welcome to the chat!';
     topic = localStorage.getItem('topic') || 'Topic not set';
@@ -66,6 +75,14 @@
     systemPrompt = newPrompt;
     localStorage.setItem('systemPrompt', newPrompt);
     console.log('New system prompt set:', localStorage.getItem('systemPrompt'));
+  }
+</script>
+
+<script lang="ts" context="module">
+  export interface ChatMessage {
+    text: string;
+    role: 'system' | 'user' | 'assistant';
+    key: number;
   }
 </script>
 
