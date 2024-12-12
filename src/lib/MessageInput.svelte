@@ -1,10 +1,18 @@
 <script lang="ts">
   export let newMessage: string;
   export let sendMessage: () => void; // Ensure sendMessage is received properly
+
+  function nextQuestion() {
+    newMessage = 'Next Question';
+    sendMessage();
+  }
 </script>
 
 <footer class="fixed bottom-0 left-0 w-full p-4 bg-gray-600">
   <div class="flex items-center">
+    <button on:click={nextQuestion} class="p-2 me-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
+      Next Question
+    </button>
     <input
         type="text"
         placeholder="Type your message..."
@@ -14,7 +22,7 @@
     />
     <button
         on:click={sendMessage}
-        class="p-2 rounded-md bg-blue-500 text-white -ml-px hover:bg-blue-600 transition">
+        class="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition">
       Send
     </button>
   </div>
