@@ -1,32 +1,46 @@
 <script lang="ts">
-    export let message = "default";
-    export let role = "user";
-    export let onOptionClick; // Function to handle option click
+  export let message = "default";
+  export let role = "user";
+  export let onOptionClick; // Function to handle option click
 
-    // Variables to store the parsed question and options
-    let question = "";
-    let options: String[] = [];
+  // Variables to store the parsed question and options
+  let question = "";
+  let options: String[] = [];
+  let codeBlocks: String[] = [];
 
-    // Parsing logic for assistant messages
-    if (role === 'assistant') {
-        const parts = message.split("%%");
-        question = parts[0].trim(); // The first part is the question
-        options = parts.slice(1).map(option => option.trim())
-            .filter(option => option !== "" && option !== "."); // Remaining parts are the options
+  // Enhanced parsing logic for assistant messages
+  if (role === 'assistant') {
+    const codeBlockRegex = /```([\s\S]*?)```/g;
+    let match;
+
+    // Extract code blocks
+    while ((match = codeBlockRegex.exec(message)) !== null) {
+      const code = match[1] || match[2]; // Match either triple or single backtick
+      if (code) codeBlocks.push(code.trim());
     }
 
-    const indexToLetter = (index: number) => {
-        const letters = ['A', 'B', 'C', 'D', 'E']; // Extend as needed
-        return letters[index] || '';
-    };
+    // Remove code blocks from the message for further parsing
+    const cleanedMessage = message.replace(codeBlockRegex, '').trim();
 
-    const cleanOption = (option: String) => option.replace(/^[A-D][ .)]\s*/, '').trim();
+    // Split message into question and options
+    const parts = cleanedMessage.split("%%");
+    question = parts[0].trim(); // The first part is the question
+    options = parts.slice(1).map(option => option.trim())
+      .filter(option => option !== "" && option !== "."); // Remaining parts are the options
+  }
 
-    const handleOptionClick = (index: number) => {
-        if (onOptionClick) {
-            onOptionClick(options[index]);
-        }
-    };
+  const indexToLetter = (index: number) => {
+    const letters = ['A', 'B', 'C', 'D', 'E']; // Extend as needed
+    return letters[index] || '';
+  };
+
+  const cleanOption = (option: String) => option.replace(/^[A-D][ .)]\s*/, '').trim();
+
+  const handleOptionClick = (index: number) => {
+    if (onOptionClick) {
+      onOptionClick(options[index]);
+    }
+  };
 </script>
 <div class="flex mb-2 justify-between">
   <div class="max-w-lg px-4 py-2 rounded-xl"
@@ -42,11 +56,24 @@
 
     {#if role === 'assistant' && question}
       <div class="assistant-reply">
-        <p class="question text-md text-gray-800" class:font-semibold={options.length > 0}>{question}</p>
+        <!-- Render the question -->
+        <p class="question text-md text-gray-800" class:font-semibold={options.length > 0}>
+          {question}
+        </p>
+
+        <!-- Render code blocks if available -->
+        {#if codeBlocks.length > 0}
+          <div class="code-blocks mt-2 space-y-2">
+            {#each codeBlocks as codeBlock}
+              <pre class="bg-gray-300 text-blue-900 p-2 rounded text-sm overflow-auto"><code>{codeBlock}</code></pre>
+            {/each}
+          </div>
+        {/if}
+
+        <!-- Render options -->
         <ul class="options space-y-2 mt-2">
           {#each options as option, index}
             {#if option !== "" && option !== "."}
-
               <li>
                 <button
                     on:click={() => handleOptionClick(index)}
@@ -59,6 +86,7 @@
           {/each}
         </ul>
       </div>
+
     {:else}
       <p class="user-message text-white">{message}</p>
     {/if}
