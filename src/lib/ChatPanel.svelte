@@ -10,7 +10,7 @@
   }
 
   export let messages: Message[] = [];
-  export let topic = 'Starter Chat';
+  export let topic: string;
   let newMessage = '';
 
   onMount(() => {
@@ -18,13 +18,7 @@
     if (storedMessages) {
       messages = JSON.parse(storedMessages);
     }
-    const storedTopic = localStorage.getItem('topic');
-    if (storedTopic) {
-      topic = storedTopic;
-    }
   });
-
-  $: localStorage.setItem('chatMessages', JSON.stringify(messages));
 
   function sendMessage() {
     if (newMessage.trim()) {

@@ -3,14 +3,14 @@
   import AuthorizeModal from './lib/AuthorizeModal.svelte';
   import NewTopicModal from './lib/NewTopicModal.svelte';
   import SystemPromptModal from './lib/SystemPromptModal.svelte';
-  import { onMount } from 'svelte';
+  import {onMount} from 'svelte';
 
   let newMessage = '';
   let systemPrompt = 'Welcome to the chat!';
   let showAuthorizeModal = false;
   let showTopicModal = false;
   let showSystemPromptModal = false;
-  let topic = 'General Discussion';
+  let topic = localStorage.getItem('topic') || 'Topic not set';
 
   // Load system prompt and topic from localStorage on mount
   onMount(() => {
@@ -41,14 +41,16 @@
 
   function resetChat() {
     localStorage.removeItem('chatMessages');
-    localStorage.setItem('topic', 'General Discussion');
+    localStorage.setItem('topic', 'z');
     systemPrompt = 'Welcome to the chat!';
-    topic = 'General Discussion';
+    topic = localStorage.getItem('topic') || 'Topic not set';
   }
 
   function setTopic(newTopic: string) {
+    console.log('New topic:', newTopic);
     localStorage.setItem('topic', newTopic);
     topic = newTopic;
+    console.log("Topic: ", topic);
     console.log('New topic set:', localStorage.getItem('topic'));
   }
 
@@ -65,13 +67,16 @@
     </button>
     <h1 class="text-xl font-semibold">Quiz GPT</h1>
     <div>
-      <button on:click={toggleTopicModal} class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
+      <button on:click={toggleTopicModal}
+              class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
         Set Topic
       </button>
-      <button on:click={toggleSystemPromptModal} class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
+      <button on:click={toggleSystemPromptModal}
+              class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
         Edit System Prompt
       </button>
-      <button on:click={toggleAuthorizeModal} class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+      <button on:click={toggleAuthorizeModal}
+              class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
         Authorize
       </button>
     </div>
@@ -84,6 +89,6 @@
 
   <!-- Modal Section -->
   <AuthorizeModal {showAuthorizeModal} onClose={toggleAuthorizeModal}/>
-  <NewTopicModal {showTopicModal} onClose={toggleTopicModal} setTopic={setTopic}/>
+  <NewTopicModal {showTopicModal} {topic} onClose={toggleTopicModal} setTopic={setTopic}/>
   <SystemPromptModal {showSystemPromptModal} onClose={toggleSystemPromptModal} setSystemPrompt={setSystemPrompt}/>
 </main>
