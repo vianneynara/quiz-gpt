@@ -34,7 +34,7 @@
     return letters[index] || '';
   };
 
-  const cleanOption = (option: String) => option.replace(/^[A-D][ .)]\s*/, '').trim();
+  const cleanOption = (option: String) => option.replace(/^[A-D][ .):]\s*/, '').trim();
 
   const handleOptionClick = (index: number) => {
     if (onOptionClick) {
