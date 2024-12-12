@@ -5,7 +5,7 @@
 
   let newSystemPrompt = '';
 
-  import { onMount } from 'svelte';
+  import {onMount} from 'svelte';
 
   onMount(() => {
     const storedPrompt = localStorage.getItem('systemPrompt');
@@ -25,9 +25,10 @@
     <div class="bg-white p-4 rounded-md shadow-md w-1/2">
       <h2 class="text-black text-xl font-semibold mb-4">Edit System Prompt</h2>
       <textarea
-        placeholder="Enter new system prompt"
-        bind:value={newSystemPrompt}
-        class="bg-gray-300 text-black p-2 border rounded-md w-full mb-4"
+          placeholder="Enter new system prompt"
+          bind:value={newSystemPrompt}
+          on:keydown={(e) => (e.key === 'Enter') ? handleSetSystemPrompt() : (e.key === 'Escape') && onClose()}
+          class="bg-gray-300 text-black p-2 border rounded-md w-full mb-4"
       ></textarea>
       <div class="flex justify-end">
         <button on:click={onClose} class="p-2 bg-gray-500 text-white rounded-md mr-2">Cancel</button>

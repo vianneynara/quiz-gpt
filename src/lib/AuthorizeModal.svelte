@@ -40,6 +40,7 @@
             type={showApiKey ? 'text' : 'password'}
             placeholder="Enter API Key"
             bind:value={apiKey}
+            on:keydown={(e) => (e.key === 'Enter') ? saveApiKey() : (e.key === 'Escape') && handleClose()}
             class="bg-gray-300 text-black w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
         />
         <button on:click={toggleShowApiKey} class="ml-2 p-2 bg-white text-gray-600 rounded-md">
@@ -63,8 +64,7 @@
         <button on:click={handleClose} class="p-2 bg-gray-500 text-white rounded-md mr-2">Cancel</button>
         <button
             on:click={saveApiKey}
-            class="p-2 bg-blue-500 text-white rounded-md"
-            on:keydown={(event) => event.key === 'Enter' && saveApiKey()}>
+            class="p-2 bg-blue-500 text-white rounded-md">
           Set API Key
         </button>
       </div>

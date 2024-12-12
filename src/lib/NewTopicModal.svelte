@@ -19,6 +19,7 @@
           type="text"
           placeholder="Enter the topic"
           bind:value={newTopic}
+            on:keydown={(e) => (e.key === 'Enter') ? handleSetTopic() : (e.key === 'Escape') && onClose()}
           class="bg-gray-300 text-black w-full p-2 border rounded mb-4 focus:ring-2 focus:ring-blue-500"
       />
       <div class="flex justify-end">
