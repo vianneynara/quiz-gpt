@@ -1,11 +1,11 @@
 <script lang="ts">
-  import MessageInput from './MessageInput.svelte'; // Import the new component
+  import MessageInput from './MessageInput.svelte';
   import ChatBubble from './ChatBubble.svelte';
   import { onMount } from 'svelte';
 
   interface Message {
     text: string;
-    isSent: boolean;
+    sender: 'system' | 'user' | 'assistant';
     key: number;
   }
 
@@ -13,7 +13,6 @@
   export let topic = 'Starter Chat';
   let newMessage = '';
 
-  // Load messages and topic from localStorage on mount
   onMount(() => {
     const storedMessages = localStorage.getItem('chatMessages');
     if (storedMessages) {
@@ -25,27 +24,22 @@
     }
   });
 
-  // Save messages to localStorage whenever they change
   $: localStorage.setItem('chatMessages', JSON.stringify(messages));
 
   function sendMessage() {
-    console.log("Click")
     if (newMessage.trim()) {
-      // Add new sent message
-      const newMsg = { text: newMessage, isSent: true, key: messages.length };
-      messages = [...messages, newMsg]; // Add to the messages array
-
-      // Save updated messages to localStorage
+      const newMsg: Message = { text: newMessage, sender: 'user', key: messages.length };
+      messages = [...messages, newMsg];
       localStorage.setItem('chatMessages', JSON.stringify(messages));
-      newMessage = ''; // Clear the input field
+      newMessage = '';
     }
   }
 </script>
 
 <div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
   <h2 class="text-xl text-blue-700 font-semibold text-center">{topic}</h2>
-  {#each messages as { text, isSent }, index}
-    <ChatBubble message={text} isSent={isSent} key={index} />
+  {#each messages as { text, sender }, index}
+    <ChatBubble message={text} sender={sender} key={index} />
   {/each}
 </div>
 
