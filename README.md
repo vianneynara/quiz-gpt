@@ -1,47 +1,39 @@
-# Svelte + TS + Vite
+# Quiz GPT using OpenAI with Svelte
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+Simple college project to demonstrate the use of OpenAI's API with Svelte.
+Built with a form of a quiz chat that relies on AI to create questions and answers for a defined topic.
+Can be used for educational purposes or just for fun.
 
-## Recommended IDE Setup
+# Features
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+1. Customizable API key.
+2. Customizable topic.
+3. Customizable system prompt.
+4. Chat reset.
+5. Chat history.
+6. Parsing of choices to clickable buttons.
 
-## Need an official Svelte framework?
+# How to run
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+1. Clone the repository
+2. Run `npm install`
+3. Run `npm run dev`
+4. Open your browser and go to `http://localhost:5173`
+5. Enter the API key and the topic.
+6. Start the quiz.
 
-## Technical considerations
+# Demo
 
-**Why use this over SvelteKit?**
+## Chatting/quiz demo
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+![Chatting demo](images/quiz-gpt-demo-chatting.gif)
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+## Additional features demo
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+![Additional features demo](images/quiz-gpt-demo-additional-features.gif)
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+# Honorable mentions
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+Since I know to code, but have no priori knowledge on using Svelte:
+- ChatGPT
+- Copilot
