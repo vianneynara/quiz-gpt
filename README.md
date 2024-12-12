@@ -24,6 +24,10 @@ Can be used for educational purposes or just for fun.
 
 # Demo
 
+## Preview
+
+![Preview](images/quiz-gpt-parsings.png)
+
 ## Chatting/quiz demo
 
 ![Chatting demo](images/quiz-gpt-demo-chatting.gif)
