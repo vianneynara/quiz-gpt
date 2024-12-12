@@ -1,8 +1,8 @@
 <script lang="ts">
   import MessageInput from './MessageInput.svelte';
   import ChatBubble from './ChatBubble.svelte';
-  import { onMount } from 'svelte';
-  import type { ChatMessage } from '../App.svelte';
+  import {onMount} from 'svelte';
+  import type {ChatMessage} from '../App.svelte';
   import axios from 'axios';
 
   export let messages: ChatMessage[] = [];
@@ -27,29 +27,23 @@
 
     if (newMessage.trim()) {
       try {
-        const conversationHistory = messages.map((msg) => ({
-          role: msg.role,
-          content: msg.text
-        }));
-
-        conversationHistory.push({
-          role: 'user',
-          content: newMessage
-        });
-
-        const conversationHistoryWithTopic = conversationHistory.map((msg, index) => {
-          if (index === conversationHistory.length - 1) {
-            return {
-              role: msg.role,
-              content: `The topic of this conversation is: ${localStorage.getItem('topic')}${msg.content}`
-            }
+        const conversationHistory = [
+          ...messages.map((msg) => ({
+            role: msg.role,
+            content: msg.text
+          })),
+          {
+            role: 'user',
+            content: `The topic of this conversation is:
+            ${localStorage.getItem('topic')}
+            ${newMessage}`
           }
-          return msg;
-        });
+        ];
+        console.log("Latest message sent: ", conversationHistory[conversationHistory.length - 1]);
 
         const response = await axios.post(apiUrl, {
           model: 'gpt-3.5-turbo',
-          messages: conversationHistoryWithTopic,
+          messages: conversationHistory,
         }, {
           headers: {
             'Authorization': `Bearer ${apiKey}`,
@@ -67,7 +61,7 @@
 
         messages = [
           ...messages,
-          { text: newMessage, role: 'user', key: messages.length },
+          {text: newMessage, role: 'user', key: messages.length},
           assistantMessage
         ];
 
@@ -84,7 +78,7 @@
     setTimeout(() => {
       const chatContainer = document.querySelector('.space-y-4');
       if (chatContainer) {
-        chatContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        chatContainer.scrollIntoView({behavior: 'smooth', block: 'end'});
       }
     }, 1500);
   }
@@ -94,7 +88,7 @@
     handleSend();
   }
 
-  function handleOptionClick(option) {
+  function handleOptionClick(option: string) {
     newMessage = option;
     handleSend();
   }
@@ -102,8 +96,8 @@
 
 <div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full pb-20">
   <h2 class="text-xl text-blue-700 font-semibold text-center">{topic}</h2>
-  {#each messages.slice(1) as { text, role }, index}
-    <ChatBubble message={text} role={role} onOptionClick={handleOptionClick} />
+  {#each messages.slice(1) as {text, role}, index}
+    <ChatBubble message={text} role={role} onOptionClick={handleOptionClick}/>
   {/each}
   {#if messages.length === 1}
     <div class="flex justify-center">
@@ -114,7 +108,7 @@
   {/if}
 </div>
 
-<MessageInput bind:newMessage={newMessage} sendMessage={handleSend} />
+<MessageInput bind:newMessage={newMessage} sendMessage={handleSend}/>
 
 <style>
   :global(body) {
