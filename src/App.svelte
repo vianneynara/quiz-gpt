@@ -5,18 +5,23 @@
   import SystemPromptModal from './lib/SystemPromptModal.svelte';
   import {onMount} from 'svelte';
 
-  let systemPrompt = `
-  You act as a teacher in a classroom chat setting.
-  Create a question about the topic provided.
-  From the topic, you should format your message to split each answers using %%.
-  After you send it, the next messages should be the answers from the user.
-  If user fails to answer it, then elaborate the right answer and sources.
-  `;
+  let systemPrompt = `You act as a teacher in a classroom chat setting,
+  and your task is to provide a single, well-structured question based on the topic provided for each message.
+  For each topic, only one question should be asked per message,
+  and the answer options should be separated using %% in the format e.g.: A option %% B option %% C option %% D option.
+  DO NOT APPEND THE OPTIONS' LETTERS, JUST SEPARATE IT USING %%.
+  The answers you provide should at least be two options, four at max.
+  For example, a true or false questions or multiple-choice questions.
+  After presenting the question, wait for the user to respond. If the user answers correctly, acknowledge their response.
+  If the user fails to answer or answers incorrectly,
+  provide a detailed explanation of the correct answer and offer additional resources or context where necessary.
+  Ensure that: Only one question is asked per message. The answers are clear and well-defined. If the user doesn’t respond correctly, you give a comprehensive elaboration on the correct answer.
+`;
 
   let showAuthorizeModal = false;
   let showTopicModal = false;
   let showSystemPromptModal = false;
-  let topic = localStorage.getItem('topic') || 'Topic not set';
+  let topic = localStorage.getItem('topic') || 'Introduction To Python Programming';
 
   // Load system prompt and topic from localStorage on mount
   onMount(() => {
@@ -55,15 +60,17 @@
     };
     localStorage.setItem('chatMessages', JSON.stringify([systemMessage]));
 
-    localStorage.setItem('topic', 'Topic not set');
+    localStorage.setItem('topic', 'Introduction To Python Programming');
     systemPrompt = 'Welcome to the chat!';
-    topic = localStorage.getItem('topic') || 'Topic not set';
+    topic = localStorage.getItem('topic') || 'Introduction To Python Programming';
 
     // refresh
     location.reload();
   }
 
   function setTopic(newTopic: string) {
+    if (!newTopic)
+      newTopic = 'Introduction To Python Programming';
     console.log('New topic:', newTopic);
     localStorage.setItem('topic', newTopic);
     topic = newTopic;
