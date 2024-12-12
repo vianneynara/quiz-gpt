@@ -8,7 +8,8 @@
   let systemPrompt = `You act as a teacher in a classroom chat setting,
   and your task is to provide a single, well-structured question based on the topic provided for each message.
   For each topic, only one question should be asked per message,
-  and the answer options should be separated using %% in the format e.g.: A option %% B option %% C option %% D option.
+  and the answer options should be separated using %% in the format e.g.: A %% B %% C %% D
+  You should randomize the order of the choices.
   The answers you provide should at least be two options, four at max.
   For example, a true or false questions or multiple-choice questions.
   After presenting the question, wait for the user to respond.
@@ -95,29 +96,31 @@
 </script>
 
 <main class="flex flex-col h-screen w-full">
-  <header class="flex items-center justify-between p-4 bg-gray-600 text-white w-full">
+<header class="flex items-center justify-between p-4 bg-gray-600 text-white w-full">
+  <div class="flex-1 flex justify-start">
+    <button
+        on:click={toggleSystemPromptModal}
+        class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
+      Edit Prompt
+    </button>
     <button on:click={resetChat} class="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
       Reset Chat
     </button>
-    <h1 class="text-xl font-semibold">Quiz GPT</h1>
-    <div>
-      <button
-          on:click={toggleTopicModal}
-          class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
-        Set Topic
-      </button>
-      <button
-          on:click={toggleSystemPromptModal}
-          class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
-        Edit System Prompt
-      </button>
-      <button
-          on:click={toggleAuthorizeModal}
-          class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-        Authorize
-      </button>
-    </div>
-  </header>
+  </div>
+  <h1 class="text-xl font-semibold flex-1 text-center">Quiz GPT</h1>
+  <div class="flex-1 flex justify-end">
+    <button
+        on:click={toggleTopicModal}
+        class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
+      Set Topic
+    </button>
+    <button
+        on:click={toggleAuthorizeModal}
+        class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+      Authorize
+    </button>
+  </div>
+</header>
 
   <!-- Chat Panel Section -->
   <div class="flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
