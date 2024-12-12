@@ -5,7 +5,6 @@
   import SystemPromptModal from './lib/SystemPromptModal.svelte';
   import {onMount} from 'svelte';
 
-  let newMessage = '';
   let systemPrompt = 'Welcome to the chat!';
   let showAuthorizeModal = false;
   let showTopicModal = false;
@@ -41,7 +40,7 @@
 
   function resetChat() {
     localStorage.removeItem('chatMessages');
-    localStorage.setItem('topic', 'z');
+    localStorage.setItem('topic', 'Topic not set');
     systemPrompt = 'Welcome to the chat!';
     topic = localStorage.getItem('topic') || 'Topic not set';
   }
@@ -67,16 +66,19 @@
     </button>
     <h1 class="text-xl font-semibold">Quiz GPT</h1>
     <div>
-      <button on:click={toggleTopicModal}
-              class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
+      <button
+          on:click={toggleTopicModal}
+          class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition mr-2">
         Set Topic
       </button>
-      <button on:click={toggleSystemPromptModal}
-              class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
+      <button
+          on:click={toggleSystemPromptModal}
+          class="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition mr-2">
         Edit System Prompt
       </button>
-      <button on:click={toggleAuthorizeModal}
-              class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+      <button
+          on:click={toggleAuthorizeModal}
+          class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
         Authorize
       </button>
     </div>
@@ -89,6 +91,6 @@
 
   <!-- Modal Section -->
   <AuthorizeModal {showAuthorizeModal} onClose={toggleAuthorizeModal}/>
-  <NewTopicModal {showTopicModal} {topic} onClose={toggleTopicModal} setTopic={setTopic}/>
+  <NewTopicModal {showTopicModal} onClose={toggleTopicModal} setTopic={setTopic}/>
   <SystemPromptModal {showSystemPromptModal} onClose={toggleSystemPromptModal} setSystemPrompt={setSystemPrompt}/>
 </main>

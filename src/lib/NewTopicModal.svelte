@@ -2,9 +2,8 @@
   export let showTopicModal: boolean;
   export let onClose: () => void;
   export let setTopic: (newTopic: string) => void;
-  export let topic: string;
 
-  let newTopic = topic;
+  let newTopic = "";
 
   function handleSetTopic() {
     setTopic(newTopic);
