@@ -5,7 +5,7 @@
 
   interface Message {
     text: string;
-    sender: 'system' | 'user' | 'assistant';
+    role: 'system' | 'user' | 'assistant';
     key: number;
   }
 
@@ -22,7 +22,7 @@
 
   function sendMessage() {
     if (newMessage.trim()) {
-      const newMsg: Message = { text: newMessage, sender: 'user', key: messages.length };
+      const newMsg: Message = { text: newMessage, role: 'user', key: messages.length };
       messages = [...messages, newMsg];
       localStorage.setItem('chatMessages', JSON.stringify(messages));
       newMessage = '';
@@ -32,8 +32,8 @@
 
 <div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
   <h2 class="text-xl text-blue-700 font-semibold text-center">{topic}</h2>
-  {#each messages as { text, sender }, index}
-    <ChatBubble message={text} sender={sender} key={index} />
+  {#each messages as { text, role }, index}
+    <ChatBubble message={text} role={role} key={index} />
   {/each}
 </div>
 

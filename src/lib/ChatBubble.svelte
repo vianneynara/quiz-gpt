@@ -1,29 +1,29 @@
 <script>
   export let message = "default";
-  export let sender = "user";
+  export let role = "user";
   export let key = 0;
 </script>
 
-<div class="flex mb-2" class:sender-user={sender === 'user'} class:sender-assistant={sender === 'assistant'} class:sender-system={sender === 'system'}>
+<div class="flex mb-2" class:role-user={role === 'user'} class:role-assistant={role === 'assistant'} class:role-system={role === 'system'}>
   <div class="max-w-sm px-4 py-2 rounded-xl"
-       class:ml-auto={sender === 'user'}
-       class:mr-auto={sender !== 'user'}
-       class:bg-blue-500={sender === 'user'}
-       class:bg-gray-200={sender !== 'user'}
-       class:text-white={sender === 'user'}
-       class:text-black={sender !== 'user'}>
+       class:ml-auto={role === 'user'}
+       class:mr-auto={role !== 'user'}
+       class:bg-blue-500={role === 'user'}
+       class:bg-gray-200={role !== 'user'}
+       class:text-white={role === 'user'}
+       class:text-black={role !== 'user'}>
     {message}
   </div>
 </div>
 
 <style>
-  :global(.sender-user) {
+  :global(.role-user) {
     justify-content: flex-end;
   }
-  :global(.sender-assistant) {
+  :global(.role-assistant) {
     justify-content: flex-start;
   }
-  :global(.sender-system) {
+  :global(.role-system) {
     justify-content: center;
   }
   :global(.ml-auto) {
