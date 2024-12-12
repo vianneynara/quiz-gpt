@@ -5,7 +5,7 @@ const config = {
     kit: {
         adapter: adapter(),
         paths: {
-            base: '/quiz-gpt',
+            base: '/quiz-gpt/',
         },
         prerender: {
             default: true
