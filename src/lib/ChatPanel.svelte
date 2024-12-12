@@ -87,7 +87,7 @@
       if (chatContainer) {
         chatContainer.scrollIntoView({behavior: 'smooth', block: 'end'});
       }
-    }, 100);
+    }, 1500);
   }
 
   function startQuiz() {
