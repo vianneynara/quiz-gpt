@@ -18,6 +18,7 @@
     }
   });
 
+  // Function to send the user message to OpenAI
   async function sendToOpenAI() {
     const apiKey = localStorage.getItem('apiKey');
     if (!apiKey) {
@@ -70,6 +71,7 @@
           assistantMessage
         ];
 
+        // Save messages to localStorage
         localStorage.setItem('chatMessages', JSON.stringify(messages));
         newMessage = '';
       } catch (error) {
@@ -80,6 +82,12 @@
 
   function handleSend() {
     sendToOpenAI();
+    setTimeout(() => {
+      const chatContainer = document.querySelector('.space-y-4');
+      if (chatContainer) {
+        chatContainer.scrollIntoView({behavior: 'smooth', block: 'end'});
+      }
+    }, 100);
   }
 
   function startQuiz() {
@@ -88,10 +96,10 @@
   }
 </script>
 
-<div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
+<div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full pb-20">
   <h2 class="text-xl text-blue-700 font-semibold text-center">{topic}</h2>
   {#each messages.slice(1) as {text, role}, index}
-    <ChatBubble message={text} role={role} key={index}/>
+    <ChatBubble message={text} role={role}/>
   {/each}
   {#if messages.length === 1}
     <div class="flex justify-center">
