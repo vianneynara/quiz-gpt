@@ -76,7 +76,6 @@ Rules for generating questions:
     systemPrompt = 'Welcome to the chat!';
     topic = localStorage.getItem('topic') || 'Introduction To Python Programming';
 
-    // Open the topic modal without reloading
     showTopicModal = true;
   }
 
@@ -133,12 +132,12 @@ Rules for generating questions:
     </div>
   </header>
 
-  <!-- Chat Panel Section -->
+  <!-- Chat Panel section -->
   <div class="flex-1 overflow-y-auto bg-gray-100 p-4 w-full">
     <ChatPanel {topic}/>
   </div>
 
-  <!-- Modal Section -->
+  <!-- Modals (pop up windows) section -->
   <AuthorizeModal {showAuthorizeModal} onClose={toggleAuthorizeModal}/>
   <NewTopicModal {showTopicModal} onClose={toggleTopicModal} setTopic={setTopic}/>
   <SystemPromptModal {showSystemPromptModal} onClose={toggleSystemPromptModal} setSystemPrompt={setSystemPrompt}/>

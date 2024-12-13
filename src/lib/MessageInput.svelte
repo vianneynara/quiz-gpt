@@ -1,6 +1,6 @@
 <script lang="ts">
   export let newMessage: string;
-  export let sendMessage: () => void; // Ensure sendMessage is received properly
+  export let sendMessage: () => void;
 
   function nextQuestion() {
     newMessage = 'Next Question';
@@ -29,5 +29,4 @@
 </footer>
 
 <style>
-  /* You can add styles here if necessary */
 </style>

@@ -1,21 +1,20 @@
 <script lang="ts">
   export let message = "default";
   export let role = "user";
-  export let onOptionClick; // Function to handle option click
+  export let onOptionClick;
 
-  // Variables to store the parsed question and options
   let question = "";
   let options: String[] = [];
   let codeBlocks: String[] = [];
 
-  // Enhanced parsing logic for assistant messages
   if (role === 'assistant') {
     const codeBlockRegex = /```([\s\S]*?)```/g;
     let match;
 
     // Extract code blocks
     while ((match = codeBlockRegex.exec(message)) !== null) {
-      const code = match[1] || match[2]; // Match either triple or single backtick
+      // Match either triple or single backtick
+      const code = match[1] || match[2];
       if (code) codeBlocks.push(code.trim());
     }
 
@@ -30,7 +29,7 @@
   }
 
   const indexToLetter = (index: number) => {
-    const letters = ['A', 'B', 'C', 'D', 'E']; // Extend as needed
+    const letters = ['A', 'B', 'C', 'D', 'E'];
     return letters[index] || '';
   };
 
@@ -56,7 +55,7 @@
 
     {#if role === 'assistant' && question}
       <div class="assistant-reply">
-        <!-- Render the question -->
+        <!-- Render question -->
         <p class="question text-md text-gray-800" class:font-semibold={options.length > 0}>
           {@html question}
         </p>
@@ -71,7 +70,7 @@
           </div>
         {/if}
 
-        <!-- Render options -->
+        <!-- Render options/choices -->
         <ul class="options space-y-2 mt-2">
           {#each options as option, index}
             {#if option !== "" && option !== "." && option !== "```"}
