@@ -10,6 +10,15 @@
 
   const apiUrl = `https://api.openai.com/v1/chat/completions`;
   let newMessage = '';
+  let selectedModel = 'gpt-3.5-turbo';
+
+  const models = {
+    'gpt-4o': 'GPT-4o: (128,000 | 16,384) tokens',
+    'gpt-4o-mini': 'GPT-4o Mini: (128,000 | 16,384) tokens',
+    'gpt-4-turbo': 'GPT-4 Turbo: (128,000 | 4,096) tokens',
+    'gpt-4': 'GPT-4: (8,192 | 8,192) tokens',
+    'gpt-3.5-turbo': 'GPT-3.5 Turbo: (16,385 | 4,096) tokens'
+  };
 
   onMount(() => {
     const storedMessages = localStorage.getItem('chatMessages');
@@ -42,7 +51,7 @@
         console.log("Latest message sent: ", conversationHistory[conversationHistory.length - 1]);
 
         const response = await axios.post(apiUrl, {
-          model: 'gpt-3.5-turbo',
+          model: selectedModel,
           messages: conversationHistory,
         }, {
           headers: {
@@ -95,9 +104,18 @@
 </script>
 
 <div class="space-y-4 flex-1 overflow-y-auto bg-gray-100 p-4 w-full pb-20">
-  <h2 class="text-xl text-blue-700 font-semibold text-center">{topic}</h2>
-  {#each messages.slice(1) as {text, role}, index}
-    <ChatBubble message={text} role={role} onOptionClick={handleOptionClick}/>
+  <div class="flex justify-between items-center mb-4">
+    <div class="justify-start">
+      <select id="model-select" bind:value={selectedModel} class="p-2 border rounded-md">
+        {#each Object.entries(models) as [key, value]}
+          <option value={key}>{value}</option>
+        {/each}
+      </select>
+    </div>
+    <h2 class="text-xl text-blue-700 font-semibold">{topic}</h2>
+  </div>
+  {#each messages.slice(1) as {text: message, role}, index}
+    <ChatBubble {message} {role} onOptionClick={handleOptionClick}/>
   {/each}
   {#if messages.length === 1}
     <div class="flex justify-center">
