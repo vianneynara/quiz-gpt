@@ -24,7 +24,7 @@ Can be used for educational purposes or just for fun.
 
 # Demo
 
-## Preview
+## Latest Preview
 
 ![Preview](images/quiz-gpt-parsings.png)
 
